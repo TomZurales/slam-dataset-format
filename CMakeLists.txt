@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 project(slam_dataset_format)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+set(DEBUG TRUE)
 
 add_subdirectory(modules/sdf)
 

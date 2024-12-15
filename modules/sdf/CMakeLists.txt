@@ -9,5 +9,5 @@ target_include_directories(sdf
 )
 
 target_link_libraries(sdf
-  PRIVATE common
+  # PRIVATE common
 )
