@@ -14,11 +14,11 @@ namespace SDF
   public:
     virtual ~Sensor() = default;
 
-    virtual std::shared_ptr<Sensor_::Data> getData() const = 0;
+    virtual std::vector<std::shared_ptr<Sensor_::Data>> getData() const = 0;
     virtual std::shared_ptr<Sensor_::Properties> getProperties() const = 0;
 
   public:
     std::shared_ptr<Sensor_::Properties> _properties;
-    std::vector<Sensor_::Data> _data;
+    std::vector<std::shared_ptr<Sensor_::Data>> _data;
   };
 }
