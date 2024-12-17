@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+#include "sdf/blob.h"
+
 namespace SDF
 {
   class Header
@@ -23,6 +25,33 @@ namespace SDF
     {
     }
     ~Header() = default;
+
+    std::shared_ptr<Blob> toBlob()
+    {
+      std::shared_ptr<Blob> blob = std::make_shared<Blob>(22);
+      *blob << magic;
+      *blob << version_major;
+      *blob << version_minor;
+      *blob << num_frames;
+      *blob << num_sensors;
+      *blob << num_data;
+      *blob << size;
+      std::cout << "Header size: " << blob->size << std::endl;
+      return blob;
+    }
+
+    static Header fromStream(std::ifstream &stream)
+    {
+      Header header;
+      stream.read(reinterpret_cast<char *>(&header.magic), sizeof(header.magic));
+      stream.read(reinterpret_cast<char *>(&header.version_major), sizeof(header.version_major));
+      stream.read(reinterpret_cast<char *>(&header.version_minor), sizeof(header.version_minor));
+      stream.read(reinterpret_cast<char *>(&header.num_frames), sizeof(header.num_frames));
+      stream.read(reinterpret_cast<char *>(&header.num_sensors), sizeof(header.num_sensors));
+      stream.read(reinterpret_cast<char *>(&header.num_data), sizeof(header.num_data));
+      stream.read(reinterpret_cast<char *>(&header.size), sizeof(header.size));
+      return header;
+    }
 
     std::string to_string()
     {

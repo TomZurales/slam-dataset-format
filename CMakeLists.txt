@@ -1,12 +1,16 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.27)
 project(slam_dataset_format)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(DEBUG TRUE)
 
+add_subdirectory(modules/common)
+
+add_subdirectory(modules/plugins/sensors/cameras/pinhole_radtan_camera)
+
 add_subdirectory(modules/sdf)
 
 add_executable(slam_dataset_format_test main.cc)
-target_link_libraries(slam_dataset_format_test sdf)
+target_link_libraries(slam_dataset_format_test common pinhole_radtan_camera sdf)
