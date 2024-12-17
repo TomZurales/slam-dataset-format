@@ -4,7 +4,7 @@ namespace SDF
 {
   namespace Sensor_
   {
-    class Data : public Serializable
+    class Data
     {
     public:
       virtual ~Data() = default;

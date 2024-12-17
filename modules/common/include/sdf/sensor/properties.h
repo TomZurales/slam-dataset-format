@@ -4,7 +4,7 @@ namespace SDF
 {
   namespace Sensor_
   {
-    class Properties : public Serializable
+    class Properties
     {
     public:
       virtual ~Properties() = default;
