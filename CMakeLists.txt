@@ -8,7 +8,7 @@ set(DEBUG TRUE)
 
 add_subdirectory(modules/common)
 
-add_subdirectory(modules/plugins/sensors/cameras/pinhole_radtan_camera)
+add_subdirectory(modules/plugins/pinhole_radtan_camera)
 
 add_subdirectory(modules/sdf)
 

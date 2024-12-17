@@ -1,4 +1,4 @@
-#include "sdf/plugins/sensors/cameras/pinhole_radtan_camera.h"
+#include "sdf/plugins/pinhole_radtan_camera.h"
 
 // void SDF::sensors::PinholeRadTanCamera::addData(std::shared_ptr<Sensor_::Data> data)
 // {

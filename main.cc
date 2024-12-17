@@ -2,7 +2,7 @@
 #include <opencv2/imgcodecs.hpp>
 
 #include "sdf/sdf.h"
-#include "sdf/plugins/sensors/cameras/pinhole_radtan_camera.h"
+#include "sdf/plugins/pinhole_radtan_camera.h"
 
 int main(int argc, char **argv)
 {
