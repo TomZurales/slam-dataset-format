@@ -1,4 +1,4 @@
-#include "sdf/sdf/sdf.h"
+#include "sdf/sdf.h"
 
 int SDF::SDF::write(std::filesystem::path path)
 {

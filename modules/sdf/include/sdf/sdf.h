@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string>
 
-#include "sdf/sdf/header.h"
+#include "sdf/header.h"
 #include "sdf/sensor.h"
 
 namespace SDF
