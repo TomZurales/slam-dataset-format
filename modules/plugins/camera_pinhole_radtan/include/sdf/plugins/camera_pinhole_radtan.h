@@ -48,40 +48,24 @@ namespace SDF
         }
       };
 
-      class Properties : public Sensor::Properties
-      {
-      public:
-        std::string comment;
-        float rate;
-        uint32_t width;
-        uint32_t height;
-        float fx;
-        float fy;
-        float cx;
-        float cy;
-        float k1;
-        float k2;
-        float p1;
-        float p2;
-        float k3;
+      std::string comment;
+      float rate;
+      uint32_t width;
+      uint32_t height;
+      float fx;
+      float fy;
+      float cx;
+      float cy;
+      float k1;
+      float k2;
+      float p1;
+      float p2;
+      float k3;
 
-        int imageChannels;
-        int dataType;
-
-        void show() const override
-        {
-          std::cout << "Comment: " << comment << std::endl;
-          std::cout << "Rate: " << rate << " Hz" << std::endl;
-          std::cout << "Resolution: " << width << "x" << height << std::endl;
-          std::cout << "Intrinsics: " << fx << ", " << fy << ", " << cx << ", " << cy << std::endl;
-          std::cout << "Distortion Coefficients: " << k1 << ", " << k2 << ", " << p1 << ", " << p2 << ", " << k3 << std::endl;
-        }
-      };
-
-      CameraPinholeRadTan(std::string name, std::shared_ptr<Properties> properties, Transform transform);
+      int imageChannels;
+      int dataType;
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
-      std::shared_ptr<Sensor::Properties> getProperties() const override;
     };
   }
 }

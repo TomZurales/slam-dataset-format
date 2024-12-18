@@ -18,23 +18,25 @@ void processBody(std::filesystem::path bodyPath, std::shared_ptr<SDF::SDF> sdf)
 
 void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, std::shared_ptr<SDF::SDF> sdf)
 {
-  std::shared_ptr<SDF::sensors::CameraPinholeRadTan::Properties> cameraProperties(new SDF::sensors::CameraPinholeRadTan::Properties());
-  cameraProperties->comment = cameraConfig["comment"].as<std::string>();
-  cameraProperties->rate = cameraConfig["rate_hz"].as<float>();
-  cameraProperties->width = cameraConfig["resolution"][0].as<uint32_t>();
-  cameraProperties->height = cameraConfig["resolution"][1].as<uint32_t>();
-  std::vector<float> intrinsics = cameraConfig["intrinsics"].as<std::vector<float>>();
-  cameraProperties->fx = intrinsics[0];
-  cameraProperties->fy = intrinsics[1];
-  cameraProperties->cx = intrinsics[2];
-  cameraProperties->cy = intrinsics[3];
-  std::vector<float> distortion = cameraConfig["distortion_coefficients"].as<std::vector<float>>();
-  cameraProperties->k1 = distortion[0];
-  cameraProperties->k2 = distortion[1];
-  cameraProperties->p1 = distortion[2];
-  cameraProperties->p2 = distortion[3];
+  std::shared_ptr<SDF::sensors::CameraPinholeRadTan> camera(new SDF::sensors::CameraPinholeRadTan());
+  camera->name = cameraPath.filename().string();
+  camera->transform = SDF::Transform(cameraConfig["T_BS"]["data"].as<std::vector<float>>());
 
-  std::shared_ptr<SDF::sensors::CameraPinholeRadTan> camera(new SDF::sensors::CameraPinholeRadTan(cameraPath.filename().string(), cameraProperties, SDF::Transform(cameraConfig["T_BS"]["data"].as<std::vector<float>>())));
+  camera->comment = cameraConfig["comment"].as<std::string>();
+  camera->rate = cameraConfig["rate_hz"].as<float>();
+  camera->width = cameraConfig["resolution"][0].as<uint32_t>();
+  camera->height = cameraConfig["resolution"][1].as<uint32_t>();
+  std::vector<float> intrinsics = cameraConfig["intrinsics"].as<std::vector<float>>();
+  camera->fx = intrinsics[0];
+  camera->fy = intrinsics[1];
+  camera->cx = intrinsics[2];
+  camera->cy = intrinsics[3];
+  std::vector<float> distortion = cameraConfig["distortion_coefficients"].as<std::vector<float>>();
+  camera->k1 = distortion[0];
+  camera->k2 = distortion[1];
+  camera->p1 = distortion[2];
+  camera->p2 = distortion[3];
+
   camera->lazyLoad = true;
 
   for (std::filesystem::path imagePath : std::filesystem::directory_iterator(cameraPath / "data"))
@@ -50,15 +52,17 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
 
 void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared_ptr<SDF::SDF> sdf)
 {
-  std::shared_ptr<SDF::sensors::IMU6DOFAllan::Properties> imuProperties(new SDF::sensors::IMU6DOFAllan::Properties());
-  imuProperties->comment = imuConfig["comment"].as<std::string>();
-  imuProperties->rate = imuConfig["rate_hz"].as<float>();
-  imuProperties->gyroscope_noise_density = imuConfig["gyroscope_noise_density"].as<float>();
-  imuProperties->gyroscope_random_walk = imuConfig["gyroscope_random_walk"].as<float>();
-  imuProperties->accelerometer_noise_density = imuConfig["accelerometer_noise_density"].as<float>();
-  imuProperties->accelerometer_random_walk = imuConfig["accelerometer_random_walk"].as<float>();
+  std::shared_ptr<SDF::sensors::IMU6DOFAllan> imu(new SDF::sensors::IMU6DOFAllan());
+  imu->name = imuPath.filename().string();
+  imu->transform = SDF::Transform(imuConfig["T_BS"]["data"].as<std::vector<float>>());
 
-  std::shared_ptr<SDF::sensors::IMU6DOFAllan> imu(new SDF::sensors::IMU6DOFAllan(imuPath.filename().string(), imuProperties, SDF::Transform(imuConfig["T_BS"]["data"].as<std::vector<float>>())));
+  imu->comment = imuConfig["comment"].as<std::string>();
+  imu->rate = imuConfig["rate_hz"].as<float>();
+  imu->gyroscope_noise_density = imuConfig["gyroscope_noise_density"].as<float>();
+  imu->gyroscope_random_walk = imuConfig["gyroscope_random_walk"].as<float>();
+  imu->accelerometer_noise_density = imuConfig["accelerometer_noise_density"].as<float>();
+  imu->accelerometer_random_walk = imuConfig["accelerometer_random_walk"].as<float>();
+
   imu->lazyLoad = false;
 
   std::ifstream imuDataFile(imuPath / "data.csv");
@@ -179,14 +183,16 @@ int main(int argc, char **argv)
   std::cout << "EuRoC to SDF Converter" << std::endl;
   std::cout << "Input: " << input_path.string() << std::endl;
   std::cout << "Output: " << output_path.string() << std::endl;
-  std::cout << "Do you wish to continue? [Y/n] " << std::ends;
 
-  char response;
-  std::cin.get(response);
-  if (response != 'Y' && response != 'y' && response != '\n')
-  {
-    exit(0);
-  }
+  // TODO: Reenable, just for testing
+  // std::cout << "Do you wish to continue? [Y/n] " << std::ends;
+
+  // char response;
+  // std::cin.get(response);
+  // if (response != 'Y' && response != 'y' && response != '\n')
+  // {
+  //   exit(0);
+  // }
 
   std::shared_ptr<SDF::SDF> sdf(new SDF::SDF());
   for (std::filesystem::path mav_path : std::filesystem::directory_iterator(input_path))
