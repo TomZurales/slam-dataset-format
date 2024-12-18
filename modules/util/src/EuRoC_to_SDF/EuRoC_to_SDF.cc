@@ -34,16 +34,13 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
   cameraProperties->p2 = distortion[3];
 
   std::shared_ptr<SDF::sensors::PinholeRadTanCamera> camera(new SDF::sensors::PinholeRadTanCamera(cameraProperties));
-
-  camera->getProperties()->show();
-
-  size_t numFiles = std::distance(std::filesystem::directory_iterator(cameraPath / "data"), std::filesystem::directory_iterator{});
+  camera->lazyLoad = true;
 
   for (std::filesystem::path imagePath : std::filesystem::directory_iterator(cameraPath / "data"))
   {
     std::shared_ptr<SDF::sensors::PinholeRadTanCamera::Data> cameraData(new SDF::sensors::PinholeRadTanCamera::Data());
     cameraData->timestamp = std::stoull(imagePath.stem());
-    cameraData->image = cv::imread(imagePath.string(), cv::IMREAD_GRAYSCALE);
+    cameraData->imagePath = imagePath;
     camera->data.push_back(cameraData);
   }
 }

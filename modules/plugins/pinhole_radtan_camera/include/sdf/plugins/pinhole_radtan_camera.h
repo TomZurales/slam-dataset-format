@@ -6,6 +6,7 @@
 #include <stdfloat>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include <filesystem>
 #include <iostream>
 
 #include "sdf/sensor.h"
@@ -23,11 +24,26 @@ namespace SDF
       public:
         // Define the data members for PinholeRadTanCamera::Data
         cv::Mat image;
+        std::filesystem::path imagePath;
 
         void show() const override
         {
           cv::imshow("Image", image);
           cv::waitKey(1);
+        }
+
+        bool load() override
+        {
+          if (imagePath.empty())
+          {
+            return false;
+          }
+          image = cv::imread(imagePath.string());
+          if (image.empty())
+          {
+            return false;
+          }
+          return true;
         }
       };
 

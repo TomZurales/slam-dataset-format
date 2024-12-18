@@ -18,12 +18,8 @@ namespace SDF
       uint64_t timestamp;
 
       virtual void show() const = 0;
-    };
 
-    class LazyData
-    {
-    public:
-      virtual ~LazyData() = default;
+      virtual bool load() { return false; }
     };
 
     class Properties
@@ -41,8 +37,7 @@ namespace SDF
     std::shared_ptr<Properties> properties;
     bool lazyLoad = false;
 
-    virtual std::vector<std::shared_ptr<Data>>
-    getData() const = 0;
+    virtual std::vector<std::shared_ptr<Data>> getData() const = 0;
     virtual std::shared_ptr<Properties> getProperties() const = 0;
   };
 }
