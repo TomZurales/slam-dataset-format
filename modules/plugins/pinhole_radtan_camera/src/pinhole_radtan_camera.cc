@@ -1,7 +1,7 @@
 #include "sdf/plugins/pinhole_radtan_camera.h"
 
-SDF::sensors::PinholeRadTanCamera::PinholeRadTanCamera(std::shared_ptr<Properties> properties)
-    : Sensor()
+SDF::sensors::PinholeRadTanCamera::PinholeRadTanCamera(std::string name, std::shared_ptr<Properties> properties, Transform transform)
+    : Sensor(name, transform)
 {
   this->properties = properties;
 }

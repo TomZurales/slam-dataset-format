@@ -1,5 +1,10 @@
 #include "sdf/sdf.h"
 
+void SDF::SDF::addSensor(std::shared_ptr<Sensor> sensor)
+{
+  _sensors.push_back(sensor);
+}
+
 int SDF::SDF::write(std::filesystem::path path)
 {
   std::ofstream outfile = std::ofstream(path, std::ios::binary);

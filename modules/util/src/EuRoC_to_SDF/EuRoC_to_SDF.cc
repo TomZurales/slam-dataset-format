@@ -9,6 +9,7 @@
 
 #include "sdf/sdf.h"
 #include "sdf/plugins/pinhole_radtan_camera.h"
+#include "sdf/transform.h"
 
 void processBody(std::filesystem::path bodyPath, std::shared_ptr<SDF::SDF> sdf)
 {
@@ -17,7 +18,6 @@ void processBody(std::filesystem::path bodyPath, std::shared_ptr<SDF::SDF> sdf)
 void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, std::shared_ptr<SDF::SDF> sdf)
 {
   std::shared_ptr<SDF::sensors::PinholeRadTanCamera::Properties> cameraProperties(new SDF::sensors::PinholeRadTanCamera::Properties());
-  cameraProperties->name = cameraPath.filename().string();
   cameraProperties->comment = cameraConfig["comment"].as<std::string>();
   cameraProperties->rate = cameraConfig["rate_hz"].as<float>();
   cameraProperties->width = cameraConfig["resolution"][0].as<uint32_t>();
@@ -33,16 +33,18 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
   cameraProperties->p1 = distortion[2];
   cameraProperties->p2 = distortion[3];
 
-  std::shared_ptr<SDF::sensors::PinholeRadTanCamera> camera(new SDF::sensors::PinholeRadTanCamera(cameraProperties));
+  std::shared_ptr<SDF::sensors::PinholeRadTanCamera> camera(new SDF::sensors::PinholeRadTanCamera(cameraPath.filename().string(), cameraProperties, SDF::Transform(cameraConfig["T_BS"]["data"].as<std::vector<float>>())));
   camera->lazyLoad = true;
 
   for (std::filesystem::path imagePath : std::filesystem::directory_iterator(cameraPath / "data"))
   {
-    std::shared_ptr<SDF::sensors::PinholeRadTanCamera::Data> cameraData(new SDF::sensors::PinholeRadTanCamera::Data());
+    std::shared_ptr<SDF::sensors::PinholeRadTanCamera::Data> cameraData = std::make_shared<SDF::sensors::PinholeRadTanCamera::Data>();
     cameraData->timestamp = std::stoull(imagePath.stem());
     cameraData->imagePath = imagePath;
     camera->data.push_back(cameraData);
   }
+
+  sdf->addSensor(camera);
 }
 
 void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared_ptr<SDF::SDF> sdf)

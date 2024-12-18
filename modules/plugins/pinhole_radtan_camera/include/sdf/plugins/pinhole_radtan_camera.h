@@ -11,6 +11,7 @@
 
 #include "sdf/sensor.h"
 #include "sdf/blob.h"
+#include "sdf/transform.h"
 
 namespace SDF
 {
@@ -50,7 +51,6 @@ namespace SDF
       class Properties : public Sensor::Properties
       {
       public:
-        std::string name;
         std::string comment;
         float rate;
         uint32_t width;
@@ -67,7 +67,6 @@ namespace SDF
 
         void show() const override
         {
-          std::cout << "Name: " << name << std::endl;
           std::cout << "Comment: " << comment << std::endl;
           std::cout << "Rate: " << rate << " Hz" << std::endl;
           std::cout << "Resolution: " << width << "x" << height << std::endl;
@@ -76,7 +75,7 @@ namespace SDF
         }
       };
 
-      PinholeRadTanCamera(std::shared_ptr<Properties> properties);
+      PinholeRadTanCamera(std::string name, std::shared_ptr<Properties> properties, Transform transform);
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
       std::shared_ptr<Sensor::Properties> getProperties() const override;

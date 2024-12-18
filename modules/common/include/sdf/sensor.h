@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include "sdf/blob.h"
+#include "sdf/transform.h"
 
 namespace SDF
 {
@@ -30,7 +31,10 @@ namespace SDF
       virtual void show() const = 0;
     };
 
-    Sensor() = default;
+    std::string name;
+    Transform transform;
+
+    Sensor(std::string name, Transform transform) : name(name) {};
     virtual ~Sensor() = default;
 
     std::vector<std::shared_ptr<Data>> data;
