@@ -15,18 +15,15 @@ namespace SDF
 {
   namespace sensors
   {
-    class IMU6DOFAllan : public Sensor
+    class PositionLeica : public Sensor
     {
     public:
       class Data : public Sensor::Data
       {
       public:
-        float ax;
-        float ay;
-        float az;
-        float wx;
-        float wy;
-        float wz;
+        float pos_x;
+        float pos_y;
+        float pos_z;
 
         void show() const override
         {
@@ -39,12 +36,6 @@ namespace SDF
       };
 
       std::string notes;
-      float rate;
-
-      float gyroscope_noise_density;
-      float gyroscope_random_walk;
-      float accelerometer_noise_density;
-      float accelerometer_random_walk;
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
 

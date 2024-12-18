@@ -48,7 +48,7 @@ namespace SDF
         }
       };
 
-      std::string comment;
+      std::string notes;
       float rate;
       uint32_t width;
       uint32_t height;

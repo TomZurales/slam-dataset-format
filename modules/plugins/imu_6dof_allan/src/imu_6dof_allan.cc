@@ -11,7 +11,7 @@ void SDF::sensors::IMU6DOFAllan::show() const
 
   std::cout << "Transform: ";
   transform.show();
-  std::cout << "Comment: " << comment << std::endl;
+  std::cout << "Comment: " << notes << std::endl;
   std::cout << "Rate: " << rate << " Hz" << std::endl;
   std::cout << "Gyroscope Noise Density: " << gyroscope_noise_density << " rad/s/sqrt(Hz)" << std::endl;
   std::cout << "Gyroscope Random Walk: " << gyroscope_random_walk << " rad/s/sqrt(s)" << std::endl;

@@ -11,7 +11,7 @@ void SDF::sensors::CameraPinholeRadTan::show() const
 
   std::cout << "Transform: ";
   transform.show();
-  std::cout << "Comment: " << comment << std::endl;
+  std::cout << "Comment: " << notes << std::endl;
   std::cout << "Rate: " << rate << " Hz" << std::endl;
   std::cout << "Resolution: " << width << "x" << height << std::endl;
   std::cout << "Intrinsics: " << fx << ", " << fy << ", " << cx << ", " << cy << std::endl;

@@ -10,6 +10,7 @@
 #include "sdf/sdf.h"
 #include "sdf/plugins/camera_pinhole_radtan.h"
 #include "sdf/plugins/imu_6dof_allan.h"
+#include "sdf/plugins/position_leica.h"
 #include "sdf/transform.h"
 
 void processBody(std::filesystem::path bodyPath, std::shared_ptr<SDF::SDF> sdf)
@@ -22,7 +23,7 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
   camera->name = cameraPath.filename().string();
   camera->transform = SDF::Transform(cameraConfig["T_BS"]["data"].as<std::vector<float>>());
 
-  camera->comment = cameraConfig["comment"].as<std::string>();
+  camera->notes = cameraConfig["comment"].as<std::string>();
   camera->rate = cameraConfig["rate_hz"].as<float>();
   camera->width = cameraConfig["resolution"][0].as<uint32_t>();
   camera->height = cameraConfig["resolution"][1].as<uint32_t>();
@@ -56,7 +57,7 @@ void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared
   imu->name = imuPath.filename().string();
   imu->transform = SDF::Transform(imuConfig["T_BS"]["data"].as<std::vector<float>>());
 
-  imu->comment = imuConfig["comment"].as<std::string>();
+  imu->notes = imuConfig["comment"].as<std::string>();
   imu->rate = imuConfig["rate_hz"].as<float>();
   imu->gyroscope_noise_density = imuConfig["gyroscope_noise_density"].as<float>();
   imu->gyroscope_random_walk = imuConfig["gyroscope_random_walk"].as<float>();
@@ -104,6 +105,42 @@ void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared
 
 void processLeica(std::filesystem::path leicaPath, YAML::Node leicaConfig, std::shared_ptr<SDF::SDF> sdf)
 {
+  std::shared_ptr<SDF::sensors::PositionLeica> leica(new SDF::sensors::PositionLeica());
+  leica->name = leicaPath.filename().string();
+  leica->transform = SDF::Transform(leicaConfig["T_BS"]["data"].as<std::vector<float>>());
+  leica->notes = leicaConfig["comment"].as<std::string>();
+
+  leica->lazyLoad = false;
+
+  std::ifstream leicaDataFile(leicaPath / "data.csv");
+  if (!leicaDataFile.is_open())
+  {
+    std::cerr << "Could not open data file for Leica: " << leicaPath.string() << std::endl;
+    return;
+  }
+
+  // TODO: Write an actual CSV parser
+  for (std::string line; std::getline(leicaDataFile, line);)
+  {
+    if (line.empty() || line[0] == '#')
+    {
+      continue;
+    }
+    std::shared_ptr<SDF::sensors::PositionLeica::Data> leicaData = std::make_shared<SDF::sensors::PositionLeica::Data>();
+    std::istringstream ss(line);
+    std::string token;
+    std::getline(ss, token, ',');
+    leicaData->timestamp = std::stoull(token);
+    std::getline(ss, token, ',');
+    leicaData->pos_x = std::stof(token);
+    std::getline(ss, token, ',');
+    leicaData->pos_y = std::stof(token);
+    std::getline(ss, token, ',');
+    leicaData->pos_z = std::stof(token);
+    leica->data.push_back(leicaData);
+  }
+
+  sdf->addSensor(leica);
 }
 
 void processGroundTruth(std::filesystem::path groundTruthPath, YAML::Node groundTruthConfig, std::shared_ptr<SDF::SDF> sdf)
