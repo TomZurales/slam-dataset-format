@@ -9,6 +9,7 @@
 
 #include "sdf/sdf.h"
 #include "sdf/plugins/pinhole_radtan_camera.h"
+#include "sdf/plugins/imu_6dof_allan.h"
 #include "sdf/transform.h"
 
 void processBody(std::filesystem::path bodyPath, std::shared_ptr<SDF::SDF> sdf)
@@ -49,6 +50,52 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
 
 void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared_ptr<SDF::SDF> sdf)
 {
+  std::shared_ptr<SDF::sensors::IMU6DOFAllan::Properties> imuProperties(new SDF::sensors::IMU6DOFAllan::Properties());
+  imuProperties->comment = imuConfig["comment"].as<std::string>();
+  imuProperties->rate = imuConfig["rate_hz"].as<float>();
+  imuProperties->gyroscope_noise_density = imuConfig["gyroscope_noise_density"].as<float>();
+  imuProperties->gyroscope_random_walk = imuConfig["gyroscope_random_walk"].as<float>();
+  imuProperties->accelerometer_noise_density = imuConfig["accelerometer_noise_density"].as<float>();
+  imuProperties->accelerometer_random_walk = imuConfig["accelerometer_random_walk"].as<float>();
+
+  std::shared_ptr<SDF::sensors::IMU6DOFAllan> imu(new SDF::sensors::IMU6DOFAllan(imuPath.filename().string(), imuProperties, SDF::Transform(imuConfig["T_BS"]["data"].as<std::vector<float>>())));
+  imu->lazyLoad = false;
+
+  std::ifstream imuDataFile(imuPath / "data.csv");
+  if (!imuDataFile.is_open())
+  {
+    std::cerr << "Could not open data file for IMU: " << imuPath.string() << std::endl;
+    return;
+  }
+
+  // TODO: Write an actual CSV parser
+  for (std::string line; std::getline(imuDataFile, line);)
+  {
+    if (line.empty() || line[0] == '#')
+    {
+      continue;
+    }
+    std::shared_ptr<SDF::sensors::IMU6DOFAllan::Data> imuData = std::make_shared<SDF::sensors::IMU6DOFAllan::Data>();
+    std::istringstream ss(line);
+    std::string token;
+    std::getline(ss, token, ',');
+    imuData->timestamp = std::stoull(token);
+    std::getline(ss, token, ',');
+    imuData->ax = std::stof(token);
+    std::getline(ss, token, ',');
+    imuData->ay = std::stof(token);
+    std::getline(ss, token, ',');
+    imuData->az = std::stof(token);
+    std::getline(ss, token, ',');
+    imuData->wx = std::stof(token);
+    std::getline(ss, token, ',');
+    imuData->wy = std::stof(token);
+    std::getline(ss, token, ',');
+    imuData->wz = std::stof(token);
+    imu->data.push_back(imuData);
+
+    std::cout << imuData->timestamp << ", " << imuData->ax << ", " << imuData->ay << ", " << imuData->az << ", " << imuData->wx << ", " << imuData->wy << ", " << imuData->wz << std::endl;
+  }
 }
 
 void processLeica(std::filesystem::path leicaPath, YAML::Node leicaConfig, std::shared_ptr<SDF::SDF> sdf)
