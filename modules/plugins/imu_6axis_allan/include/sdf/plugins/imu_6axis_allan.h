@@ -4,8 +4,6 @@
 #include <vector>
 #include <memory>
 #include <stdfloat>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
 #include <filesystem>
 #include <iostream>
 
@@ -17,33 +15,21 @@ namespace SDF
 {
   namespace sensors
   {
-    class PinholeRadTanCamera : public Sensor
+    class IMU6AxisAllan : public Sensor
     {
     public:
       class Data : public Sensor::Data
       {
       public:
         // Define the data members for PinholeRadTanCamera::Data
-        cv::Mat image;
         std::filesystem::path imagePath;
 
         void show() const override
         {
-          cv::imshow("Image", image);
-          cv::waitKey(1);
         }
 
         bool load() override
         {
-          if (imagePath.empty())
-          {
-            return false;
-          }
-          image = cv::imread(imagePath.string());
-          if (image.empty())
-          {
-            return false;
-          }
           return true;
         }
       };
@@ -78,7 +64,7 @@ namespace SDF
         }
       };
 
-      PinholeRadTanCamera(std::string name, std::shared_ptr<Properties> properties, Transform transform);
+      IMU6AxisAllan(std::string name, std::shared_ptr<Properties> properties, Transform transform);
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
       std::shared_ptr<Sensor::Properties> getProperties() const override;
