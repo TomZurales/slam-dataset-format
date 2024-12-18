@@ -15,14 +15,18 @@ namespace SDF
 {
   namespace sensors
   {
-    class IMU6AxisAllan : public Sensor
+    class IMU6DOFAllan : public Sensor
     {
     public:
       class Data : public Sensor::Data
       {
       public:
-        // Define the data members for PinholeRadTanCamera::Data
-        std::filesystem::path imagePath;
+        float ax;
+        float ay;
+        float az;
+        float wx;
+        float wy;
+        float wz;
 
         void show() const override
         {
@@ -39,32 +43,24 @@ namespace SDF
       public:
         std::string comment;
         float rate;
-        uint32_t width;
-        uint32_t height;
-        float fx;
-        float fy;
-        float cx;
-        float cy;
-        float k1;
-        float k2;
-        float p1;
-        float p2;
-        float k3;
 
-        int imageChannels;
-        int dataType;
+        float gyroscope_noise_density;
+        float gyroscope_random_walk;
+        float accelerometer_noise_density;
+        float accelerometer_random_walk;
 
         void show() const override
         {
           std::cout << "Comment: " << comment << std::endl;
           std::cout << "Rate: " << rate << " Hz" << std::endl;
-          std::cout << "Resolution: " << width << "x" << height << std::endl;
-          std::cout << "Intrinsics: " << fx << ", " << fy << ", " << cx << ", " << cy << std::endl;
-          std::cout << "Distortion Coefficients: " << k1 << ", " << k2 << ", " << p1 << ", " << p2 << ", " << k3 << std::endl;
+          std::cout << "Gyroscope Noise Density: " << gyroscope_noise_density << std::endl;
+          std::cout << "Gyroscope Random Walk: " << gyroscope_random_walk << std::endl;
+          std::cout << "Accelerometer Noise Density: " << accelerometer_noise_density << std::endl;
+          std::cout << "Accelerometer Random Walk: " << accelerometer_random_walk << std::endl;
         }
       };
 
-      IMU6AxisAllan(std::string name, std::shared_ptr<Properties> properties, Transform transform);
+      IMU6DOFAllan(std::string name, std::shared_ptr<Properties> properties, Transform transform);
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
       std::shared_ptr<Sensor::Properties> getProperties() const override;
