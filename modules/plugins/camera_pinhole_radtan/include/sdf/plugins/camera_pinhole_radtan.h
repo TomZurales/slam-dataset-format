@@ -17,13 +17,13 @@ namespace SDF
 {
   namespace sensors
   {
-    class PinholeRadTanCamera : public Sensor
+    class CameraPinholeRadTan : public Sensor
     {
     public:
       class Data : public Sensor::Data
       {
       public:
-        // Define the data members for PinholeRadTanCamera::Data
+        // Define the data members for CameraPinholeRadTan::Data
         cv::Mat image;
         std::filesystem::path imagePath;
 
@@ -78,7 +78,7 @@ namespace SDF
         }
       };
 
-      PinholeRadTanCamera(std::string name, std::shared_ptr<Properties> properties, Transform transform);
+      CameraPinholeRadTan(std::string name, std::shared_ptr<Properties> properties, Transform transform);
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
       std::shared_ptr<Sensor::Properties> getProperties() const override;

@@ -1,17 +1,17 @@
 find_package(OpenCV 4.10 REQUIRED)
 
 set(SOURCES
-  src/pinhole_radtan_camera.cc
+  src/camera_pinhole_radtan.cc
 )
 
-add_library(pinhole_radtan_camera ${SOURCES})
+add_library(camera_pinhole_radtan ${SOURCES})
 
-target_include_directories(pinhole_radtan_camera
+target_include_directories(camera_pinhole_radtan
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
   PUBLIC ${OpenCV_INCLUDE_DIRS}
 )
 
-target_link_libraries(pinhole_radtan_camera
+target_link_libraries(camera_pinhole_radtan
   PUBLIC ${OpenCV_LIBS}
   PRIVATE common
 )

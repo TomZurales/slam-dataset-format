@@ -2,13 +2,13 @@
 #include <opencv2/imgcodecs.hpp>
 
 #include "sdf/sdf.h"
-#include "sdf/plugins/pinhole_radtan_camera.h"
+#include "sdf/plugins/camera_pinhole_radtan.h"
 
 int main(int argc, char **argv)
 {
   // SDF::SDF sdf = SDF::SDF();
 
-  // SDF::sensors::PinholeRadTanCamera::Properties properties;
+  // SDF::sensors::CameraPinholeRadTan::Properties properties;
   // properties.name = "cam0";
   // properties.width = 752;
   // properties.height = 480;
@@ -23,10 +23,10 @@ int main(int argc, char **argv)
   // properties.p1 = 0.00019359;
   // properties.p2 = 1.76187114e-05;
 
-  // std::shared_ptr<SDF::sensors::PinholeRadTanCamera::Data> data(new SDF::sensors::PinholeRadTanCamera::Data);
+  // std::shared_ptr<SDF::sensors::CameraPinholeRadTan::Data> data(new SDF::sensors::CameraPinholeRadTan::Data);
   // data->timestamp = 0;
   // data->image = cv::imread("test.png");
-  // auto sensor = sdf.addSensor<SDF::sensors::PinholeRadTanCamera>(properties);
+  // auto sensor = sdf.addSensor<SDF::sensors::CameraPinholeRadTan>(properties);
   // sensor->addData(data);
 
   // sdf.write("test.sdf");
