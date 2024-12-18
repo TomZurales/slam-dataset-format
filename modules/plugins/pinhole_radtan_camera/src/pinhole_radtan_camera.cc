@@ -1,6 +1,17 @@
 #include "sdf/plugins/pinhole_radtan_camera.h"
 
-// void SDF::sensors::PinholeRadTanCamera::addData(std::shared_ptr<Sensor_::Data> data)
-// {
-//   this->data.push_back(*std::static_pointer_cast<Data>(data));
-// }
+SDF::sensors::PinholeRadTanCamera::PinholeRadTanCamera(std::shared_ptr<Properties> properties)
+    : Sensor()
+{
+  this->properties = properties;
+}
+
+std::vector<std::shared_ptr<SDF::Sensor::Data>> SDF::sensors::PinholeRadTanCamera::getData() const
+{
+  return data;
+}
+
+std::shared_ptr<SDF::Sensor::Properties> SDF::sensors::PinholeRadTanCamera::getProperties() const
+{
+  return properties;
+}
