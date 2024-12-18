@@ -10,5 +10,19 @@ namespace SDF
   public:
     Transform() = default;
     Transform(std::vector<float> data) : data(data) {}
+
+    void show() const
+    {
+      std::cout << "[";
+      for (size_t i = 0; i < data.size(); i++)
+      {
+        std::cout << data[i];
+        if (i < data.size() - 1)
+        {
+          std::cout << ", ";
+        }
+      }
+      std::cout << "]" << std::endl;
+    }
   };
 }

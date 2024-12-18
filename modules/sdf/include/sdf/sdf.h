@@ -21,5 +21,7 @@ namespace SDF
     void addSensor(std::shared_ptr<Sensor> sensor);
 
     int write(std::filesystem::path path);
+
+    void show() const;
   };
 }

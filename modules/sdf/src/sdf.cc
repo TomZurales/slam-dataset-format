@@ -2,6 +2,7 @@
 
 void SDF::SDF::addSensor(std::shared_ptr<Sensor> sensor)
 {
+  sensor->id = _sensors.size();
   _sensors.push_back(sensor);
 }
 
@@ -32,4 +33,13 @@ int SDF::SDF::write(std::filesystem::path path)
   //   }
   // }
   return 3;
+}
+
+void SDF::SDF::show() const
+{
+  std::cout << "Sensors:" << std::endl;
+  for (auto sensor : _sensors)
+  {
+    sensor->show();
+  }
 }

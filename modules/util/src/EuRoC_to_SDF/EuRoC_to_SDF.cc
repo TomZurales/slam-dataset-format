@@ -97,9 +97,9 @@ void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared
     std::getline(ss, token, ',');
     imuData->wz = std::stof(token);
     imu->data.push_back(imuData);
-
-    std::cout << imuData->timestamp << ", " << imuData->ax << ", " << imuData->ay << ", " << imuData->az << ", " << imuData->wx << ", " << imuData->wy << ", " << imuData->wz << std::endl;
   }
+
+  sdf->addSensor(imu);
 }
 
 void processLeica(std::filesystem::path leicaPath, YAML::Node leicaConfig, std::shared_ptr<SDF::SDF> sdf)
@@ -207,6 +207,8 @@ int main(int argc, char **argv)
       processSensor(sensor_path, sdf);
     }
   }
+
+  sdf->show();
 
   return 0;
 }

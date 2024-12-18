@@ -66,6 +66,8 @@ namespace SDF
       int dataType;
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
+
+      void show() const override;
     };
   }
 }

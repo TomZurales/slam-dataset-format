@@ -47,6 +47,8 @@ namespace SDF
       float accelerometer_random_walk;
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
+
+      void show() const override;
     };
   }
 }

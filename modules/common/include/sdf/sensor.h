@@ -25,9 +25,12 @@ namespace SDF
 
     std::string name;
     Transform transform;
+    uint32_t id;
 
     Sensor() = default;
     virtual ~Sensor() = default;
+
+    virtual void show() const = 0;
 
     std::vector<std::shared_ptr<Data>> data;
     bool lazyLoad = false;
