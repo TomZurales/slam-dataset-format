@@ -33,6 +33,16 @@ namespace SDF
         {
           return true;
         }
+
+        Blob serialize() override
+        {
+          Blob blob = Blob(16);
+          blob << timestamp;
+          blob << pos_x;
+          blob << pos_y;
+          blob << pos_z;
+          return blob;
+        }
       };
 
       std::string notes;
@@ -40,6 +50,8 @@ namespace SDF
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
 
       void show() const override;
+
+      Blob serialize() override;
     };
   }
 }

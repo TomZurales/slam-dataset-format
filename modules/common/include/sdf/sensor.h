@@ -5,13 +5,14 @@
 
 #include "sdf/blob.h"
 #include "sdf/transform.h"
+#include "sdf/serializable.h"
 
 namespace SDF
 {
-  class Sensor
+  class Sensor : public Serializable
   {
   public:
-    class Data
+    class Data : public Serializable
     {
     public:
       virtual ~Data() = default;

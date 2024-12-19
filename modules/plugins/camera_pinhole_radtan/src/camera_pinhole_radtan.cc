@@ -17,3 +17,8 @@ void SDF::sensors::CameraPinholeRadTan::show() const
   std::cout << "Intrinsics: " << fx << ", " << fy << ", " << cx << ", " << cy << std::endl;
   std::cout << "Distortion Coefficients: " << k1 << ", " << k2 << ", " << p1 << ", " << p2 << ", " << k3 << std::endl;
 }
+
+SDF::Blob SDF::sensors::CameraPinholeRadTan::serialize()
+{
+  return Blob(1);
+}

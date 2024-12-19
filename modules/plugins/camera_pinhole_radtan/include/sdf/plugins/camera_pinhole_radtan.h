@@ -46,6 +46,11 @@ namespace SDF
           }
           return true;
         }
+
+        Blob serialize() override
+        {
+          return Blob(1);
+        }
       };
 
       std::string notes;
@@ -68,6 +73,8 @@ namespace SDF
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
 
       void show() const override;
+
+      Blob serialize() override;
     };
   }
 }

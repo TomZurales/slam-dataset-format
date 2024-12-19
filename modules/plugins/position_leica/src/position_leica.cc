@@ -13,3 +13,8 @@ void SDF::sensors::PositionLeica::show() const
   transform.show();
   std::cout << "Comment: " << notes << std::endl;
 }
+
+SDF::Blob SDF::sensors::PositionLeica::serialize()
+{
+  return Blob(1);
+}
