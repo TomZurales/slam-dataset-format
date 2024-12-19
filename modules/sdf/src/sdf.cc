@@ -14,21 +14,10 @@ int SDF::SDF::write(std::filesystem::path path)
     return 1;
   }
 
-  // for (auto sensor : _sensors)
-  // {
-  //   std::cout << "Sensor Name: " << sensor->getProperties()->name << std::endl;
-  //   auto sensorBytes = sensor->getProperties()->toBytes();
-  //   std::cout << "Bytes Length: " << sensor->getProperties()->toBytes().size << std::endl;
-  //   outfile << sensorBytes;
-  // }
-  // for (auto sensor : _sensors)
-  // {
-  //   for (auto data : sensor->data)
-  //   {
-  //     auto dataBytes = data->toBytes();
-  //     outfile << dataBytes;
-  //   }
-  // }
+  for (auto sensor : _sensors)
+  {
+    outfile << sensor->toBytes();
+  }
   return 3;
 }
 

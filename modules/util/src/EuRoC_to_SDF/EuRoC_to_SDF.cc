@@ -245,7 +245,7 @@ int main(int argc, char **argv)
     }
   }
 
-  sdf->show();
+  sdf->write(output_path);
 
   return 0;
 }

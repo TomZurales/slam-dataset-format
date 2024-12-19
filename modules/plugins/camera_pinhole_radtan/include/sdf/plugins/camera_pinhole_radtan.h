@@ -68,8 +68,8 @@ namespace SDF
       float p2;
       float k3;
 
-      int imageChannels;
-      int dataType;
+      uint32_t imageChannels;
+      uint32_t dataType;
 
       std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
 
