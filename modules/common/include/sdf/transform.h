@@ -1,8 +1,10 @@
 #pragma once
 
+#include "sdf/serializable.h"
+
 namespace SDF
 {
-  class Transform
+  class Transform : public Serializable
   {
   protected:
     std::vector<float> data;
@@ -23,6 +25,12 @@ namespace SDF
         }
       }
       std::cout << "]" << std::endl;
+    }
+
+    Bytes toBytes() override
+    {
+      Bytes bytes = Bytes();
+      return bytes;
     }
   };
 }

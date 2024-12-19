@@ -1,10 +1,12 @@
 #pragma once
 
+#include "sdf/bytes.h"
+
 namespace SDF
 {
   class Serializable
   {
   public:
-    virtual Blob serialize() = 0;
+    virtual Bytes toBytes() = 0;
   };
 }

@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include "sdf/blob.h"
+#include "sdf/bytes.h"
 
 namespace SDF
 {
@@ -25,20 +25,6 @@ namespace SDF
     {
     }
     ~Header() = default;
-
-    std::shared_ptr<Blob> toBlob()
-    {
-      std::shared_ptr<Blob> blob = std::make_shared<Blob>(22);
-      *blob << magic;
-      *blob << version_major;
-      *blob << version_minor;
-      *blob << num_frames;
-      *blob << num_sensors;
-      *blob << num_data;
-      *blob << size;
-      std::cout << "Header size: " << blob->size << std::endl;
-      return blob;
-    }
 
     static Header fromStream(std::ifstream &stream)
     {

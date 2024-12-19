@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include "sdf/sensor.h"
-#include "sdf/blob.h"
+#include "sdf/bytes.h"
 #include "sdf/transform.h"
 
 namespace SDF
@@ -37,17 +37,10 @@ namespace SDF
           return true;
         }
 
-        Blob serialize() override
+        Bytes toBytes() override
         {
-          Blob blob = Blob(24);
-          blob << timestamp;
-          blob << ax;
-          blob << ay;
-          blob << az;
-          blob << wx;
-          blob << wy;
-          blob << wz;
-          return blob;
+          Bytes bytes = Bytes();
+          return bytes;
         }
       };
 
@@ -63,7 +56,7 @@ namespace SDF
 
       void show() const override;
 
-      Blob serialize() override;
+      Bytes toBytes() override;
     };
   }
 }

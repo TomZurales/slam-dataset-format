@@ -14,7 +14,8 @@ void SDF::sensors::PositionLeica::show() const
   std::cout << "Comment: " << notes << std::endl;
 }
 
-SDF::Blob SDF::sensors::PositionLeica::serialize()
+SDF::Bytes SDF::sensors::PositionLeica::toBytes()
 {
-  return Blob(1);
+  Bytes bytes = Bytes();
+  return bytes;
 }

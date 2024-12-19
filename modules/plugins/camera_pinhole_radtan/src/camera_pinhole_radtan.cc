@@ -18,7 +18,10 @@ void SDF::sensors::CameraPinholeRadTan::show() const
   std::cout << "Distortion Coefficients: " << k1 << ", " << k2 << ", " << p1 << ", " << p2 << ", " << k3 << std::endl;
 }
 
-SDF::Blob SDF::sensors::CameraPinholeRadTan::serialize()
+SDF::Bytes SDF::sensors::CameraPinholeRadTan::toBytes()
 {
-  return Blob(1);
+  Bytes bytes = Bytes();
+  bytes.add(name);
+  bytes.add(transform);
+  return bytes;
 }

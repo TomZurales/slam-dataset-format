@@ -14,22 +14,19 @@ int SDF::SDF::write(std::filesystem::path path)
     return 1;
   }
 
-  auto headerBlob = _header.toBlob();
-  outfile << *headerBlob;
-
   // for (auto sensor : _sensors)
   // {
   //   std::cout << "Sensor Name: " << sensor->getProperties()->name << std::endl;
-  //   auto sensorBlob = sensor->getProperties()->toBlob();
-  //   std::cout << "Blob Length: " << sensor->getProperties()->toBlob().size << std::endl;
-  //   outfile << sensorBlob;
+  //   auto sensorBytes = sensor->getProperties()->toBytes();
+  //   std::cout << "Bytes Length: " << sensor->getProperties()->toBytes().size << std::endl;
+  //   outfile << sensorBytes;
   // }
   // for (auto sensor : _sensors)
   // {
   //   for (auto data : sensor->data)
   //   {
-  //     auto dataBlob = data->toBlob();
-  //     outfile << dataBlob;
+  //     auto dataBytes = data->toBytes();
+  //     outfile << dataBytes;
   //   }
   // }
   return 3;

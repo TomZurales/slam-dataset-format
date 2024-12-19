@@ -19,8 +19,8 @@ void SDF::sensors::IMU6DOFAllan::show() const
   std::cout << "Accelerometer Random Walk: " << accelerometer_random_walk << " m/s^2/sqrt(s)" << std::endl;
 }
 
-SDF::Blob SDF::sensors::IMU6DOFAllan::serialize()
+SDF::Bytes SDF::sensors::IMU6DOFAllan::toBytes()
 {
-  Blob blob = Blob(24);
-  return blob;
+  Bytes bytes = Bytes();
+  return bytes;
 }

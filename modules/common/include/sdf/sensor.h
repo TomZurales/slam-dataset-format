@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdint>
 
-#include "sdf/blob.h"
+#include "sdf/bytes.h"
 #include "sdf/transform.h"
 #include "sdf/serializable.h"
 

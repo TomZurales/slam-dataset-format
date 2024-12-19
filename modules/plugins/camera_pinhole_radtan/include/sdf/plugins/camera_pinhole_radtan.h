@@ -10,7 +10,7 @@
 #include <iostream>
 
 #include "sdf/sensor.h"
-#include "sdf/blob.h"
+#include "sdf/bytes.h"
 #include "sdf/transform.h"
 
 namespace SDF
@@ -47,9 +47,10 @@ namespace SDF
           return true;
         }
 
-        Blob serialize() override
+        Bytes toBytes() override
         {
-          return Blob(1);
+          Bytes bytes = Bytes();
+          return bytes;
         }
       };
 
@@ -74,7 +75,7 @@ namespace SDF
 
       void show() const override;
 
-      Blob serialize() override;
+      Bytes toBytes() override;
     };
   }
 }
