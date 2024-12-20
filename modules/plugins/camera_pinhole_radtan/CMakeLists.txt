@@ -13,7 +13,7 @@ target_include_directories(camera_pinhole_radtan
 
 target_link_libraries(camera_pinhole_radtan
   PUBLIC ${OpenCV_LIBS}
-  PRIVATE common
+  PUBLIC common
 )
 
 

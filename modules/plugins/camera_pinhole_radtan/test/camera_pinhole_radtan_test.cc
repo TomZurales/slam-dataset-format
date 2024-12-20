@@ -1,14 +1,20 @@
 #include <catch2/catch_test_macros.hpp>
 
-unsigned int Factorial(unsigned int number)
-{
-  return number <= 1 ? number : Factorial(number - 1) * number;
-}
+#include "sdf/plugins/camera_pinhole_radtan.h"
 
-TEST_CASE("Factorials are computed", "[factorial]")
+TEST_CASE("properties can be serialized and deserialized", "[camera_pinhole_radtan]")
 {
-  REQUIRE(Factorial(1) == 1);
-  REQUIRE(Factorial(2) == 2);
-  REQUIRE(Factorial(3) == 6);
-  REQUIRE(Factorial(10) == 3628800);
+  SDF::sensors::CameraPinholeRadTan camera;
+
+  SECTION("notes can be set and retrieved")
+  {
+    camera.notes = "This is a camera";
+    REQUIRE(camera.notes == "This is a camera");
+  }
+
+  SECTION("rate can be set and retrieved")
+  {
+    camera.rate = 30.0;
+    REQUIRE(camera.rate == 30.0);
+  }
 }
