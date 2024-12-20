@@ -30,6 +30,10 @@ namespace SDF
     Bytes toBytes() override
     {
       Bytes bytes = Bytes();
+      for (auto value : data)
+      {
+        bytes.add(value);
+      }
       return bytes;
     }
   };

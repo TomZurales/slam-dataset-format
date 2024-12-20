@@ -22,5 +22,16 @@ void SDF::sensors::IMU6DOFAllan::show() const
 SDF::Bytes SDF::sensors::IMU6DOFAllan::toBytes()
 {
   Bytes bytes = Bytes();
+  bytes.add(name);
+  bytes.add(transform);
+
+  bytes.add(notes);
+  bytes.add(rate);
+
+  bytes.add(gyroscope_noise_density);
+  bytes.add(gyroscope_random_walk);
+  bytes.add(accelerometer_noise_density);
+  bytes.add(accelerometer_random_walk);
+
   return bytes;
 }

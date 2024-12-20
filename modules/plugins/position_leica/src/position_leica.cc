@@ -17,5 +17,8 @@ void SDF::sensors::PositionLeica::show() const
 SDF::Bytes SDF::sensors::PositionLeica::toBytes()
 {
   Bytes bytes = Bytes();
+  bytes.add(name);
+  bytes.add(transform);
+  bytes.add(notes);
   return bytes;
 }
