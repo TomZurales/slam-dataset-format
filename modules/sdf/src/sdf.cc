@@ -18,6 +18,19 @@ int SDF::SDF::write(std::filesystem::path path)
   {
     outfile << sensor->toBytes();
   }
+  for (auto sensor : _sensors)
+  {
+    for (auto data : sensor->data)
+    {
+      _data.push(data);
+    }
+  }
+  while (!_data.empty())
+  {
+    auto data = _data.top();
+    _data.pop();
+    outfile << data->toBytes();
+  }
   return 3;
 }
 

@@ -4,7 +4,15 @@ project(slam_dataset_format)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-set(DEBUG TRUE)
+set(DO_TEST TRUE)
+
+if(DO_TEST)
+  find_package(Catch2 3 REQUIRED)
+  include(CTest)
+  include(Catch)
+
+  enable_testing()
+endif()
 
 add_subdirectory(modules/common)
 

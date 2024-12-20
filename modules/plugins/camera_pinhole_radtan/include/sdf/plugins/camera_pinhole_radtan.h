@@ -50,6 +50,8 @@ namespace SDF
         Bytes toBytes() override
         {
           Bytes bytes = Bytes();
+          bytes.add(timestamp);
+          // bytes.add(image.data());
           return bytes;
         }
       };

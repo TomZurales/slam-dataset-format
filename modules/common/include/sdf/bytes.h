@@ -25,6 +25,7 @@ namespace SDF
     {
       const uint8_t *begin = reinterpret_cast<const uint8_t *>(value.data());
       const uint8_t *end = begin + value.size();
+      add(value.size());
       bytes.insert(bytes.end(), begin, end);
     }
 

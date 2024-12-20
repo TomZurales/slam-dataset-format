@@ -40,6 +40,13 @@ namespace SDF
         Bytes toBytes() override
         {
           Bytes bytes = Bytes();
+          bytes.add(timestamp);
+          bytes.add(ax);
+          bytes.add(ay);
+          bytes.add(az);
+          bytes.add(wx);
+          bytes.add(wy);
+          bytes.add(wz);
           return bytes;
         }
       };
