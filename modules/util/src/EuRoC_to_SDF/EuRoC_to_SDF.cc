@@ -42,9 +42,7 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
 
   for (std::filesystem::path imagePath : std::filesystem::directory_iterator(cameraPath / "data"))
   {
-    std::shared_ptr<SDF::sensors::CameraPinholeRadTan::Data> cameraData = std::make_shared<SDF::sensors::CameraPinholeRadTan::Data>();
-    cameraData->timestamp = std::stoull(imagePath.stem());
-    cameraData->imagePath = imagePath;
+    std::shared_ptr<SDF::sensors::CameraPinholeRadTan::Data> cameraData = std::make_shared<SDF::sensors::CameraPinholeRadTan::Data>(std::stoull(imagePath.stem()), imagePath);
     camera->data.push_back(cameraData);
   }
 

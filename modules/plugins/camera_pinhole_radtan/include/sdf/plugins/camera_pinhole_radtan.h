@@ -22,11 +22,15 @@ namespace SDF
     public:
       class Data : public Sensor::Data
       {
-      public:
-        // Define the data members for CameraPinholeRadTan::Data
         cv::Mat image;
         std::filesystem::path imagePath;
 
+      public:
+        Data(uint64_t timestamp, std::filesystem::path imagePath)
+        {
+          this->imagePath = imagePath;
+          this->timestamp = timestamp;
+        }
         void show() const override
         {
           cv::imshow("Image", image);
@@ -52,18 +56,15 @@ namespace SDF
           Bytes bytes = Bytes();
           bytes.add(timestamp);
           load();
-          bytes.add(image.rows);
-          bytes.add(image.cols);
-          bytes.add(image.channels());
-          for (int i = 0; i < image.rows; i++)
+
+          std::vector<uchar> buf;
+          std::vector<int> compression_params;
+          compression_params.push_back(cv::IMWRITE_WEBP_QUALITY);
+          compression_params.push_back(100); // Compression level from 0 to 9 (higher means smaller size)
+          cv::imencode(".webp", image, buf, compression_params);
+          for (size_t i = 0; i < buf.size(); i++)
           {
-            for (int j = 0; j < image.cols; j++)
-            {
-              for (int k = 0; k < image.channels(); k++)
-              {
-                bytes.add(image.at<cv::Vec3b>(i, j)[k]);
-              }
-            }
+            bytes.add(buf[i]);
           }
 
           return bytes;

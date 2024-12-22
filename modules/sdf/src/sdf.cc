@@ -25,8 +25,11 @@ int SDF::SDF::write(std::filesystem::path path)
       _data.push(data);
     }
   }
+  int count = _data.size();
   while (!_data.empty())
   {
+    if ((count - _data.size()) % 100 == 0)
+      std::cout << "Writing " << count - _data.size() << " of " << count << " sensor data" << std::endl;
     auto data = _data.top();
     _data.pop();
     outfile << data->toBytes();
