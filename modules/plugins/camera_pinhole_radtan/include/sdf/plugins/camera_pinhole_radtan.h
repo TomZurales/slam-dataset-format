@@ -51,7 +51,21 @@ namespace SDF
         {
           Bytes bytes = Bytes();
           bytes.add(timestamp);
-          // bytes.add(image.data());
+          load();
+          bytes.add(image.rows);
+          bytes.add(image.cols);
+          bytes.add(image.channels());
+          for (int i = 0; i < image.rows; i++)
+          {
+            for (int j = 0; j < image.cols; j++)
+            {
+              for (int k = 0; k < image.channels(); k++)
+              {
+                bytes.add(image.at<cv::Vec3b>(i, j)[k]);
+              }
+            }
+          }
+
           return bytes;
         }
       };
