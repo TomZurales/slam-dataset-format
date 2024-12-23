@@ -8,6 +8,7 @@
 #include <opencv2/highgui.hpp>
 #include <filesystem>
 #include <iostream>
+#include <fstream>
 
 #include "sdf/sensor.h"
 #include "sdf/bytes.h"
@@ -17,7 +18,7 @@ namespace SDF
 {
   namespace sensors
   {
-    class CameraPinholeRadTan : public Sensor
+    class CameraPinholeRadTan : public Sensor, public Serializable
     {
     public:
       class Data : public Sensor::Data
@@ -31,6 +32,13 @@ namespace SDF
           this->imagePath = imagePath;
           this->timestamp = timestamp;
         }
+
+        Data(uint64_t timestamp, cv::Mat image)
+        {
+          this->image = image;
+          this->timestamp = timestamp;
+        }
+
         void show() const override
         {
           cv::imshow("Image", image);
@@ -54,20 +62,37 @@ namespace SDF
         Bytes toBytes() override
         {
           Bytes bytes = Bytes();
+
           bytes.add(timestamp);
+
           load();
 
-          std::vector<uchar> buf;
-          std::vector<int> compression_params;
-          compression_params.push_back(cv::IMWRITE_WEBP_QUALITY);
-          compression_params.push_back(100); // Compression level from 0 to 9 (higher means smaller size)
-          cv::imencode(".webp", image, buf, compression_params);
+          std::vector<uint8_t> buf;
+          cv::imencode(".webp", image, buf, {cv::IMWRITE_WEBP_QUALITY, 100});
+
+          bytes.add(buf.size());
           for (size_t i = 0; i < buf.size(); i++)
           {
             bytes.add(buf[i]);
           }
 
           return bytes;
+        }
+
+        static std::shared_ptr<Data> fromBinaryFile(std::ifstream &inputFile)
+        {
+          uint64_t timestamp;
+          inputFile.read(reinterpret_cast<char *>(&timestamp), sizeof(timestamp));
+
+          uint32_t size;
+          inputFile.read(reinterpret_cast<char *>(&size), sizeof(size));
+
+          std::vector<uint8_t> buf(size);
+          inputFile.read(reinterpret_cast<char *>(buf.data()), size);
+
+          cv::Mat image = cv::imdecode(buf, cv::IMREAD_COLOR);
+
+          return std::make_shared<Data>(timestamp, image);
         }
       };
 
@@ -93,6 +118,7 @@ namespace SDF
       void show() const override;
 
       Bytes toBytes() override;
+
+      static std::shared_ptr<CameraPinholeRadTan> fromBinaryFile(std::ifstream &inputFile);
     };
   }
-}

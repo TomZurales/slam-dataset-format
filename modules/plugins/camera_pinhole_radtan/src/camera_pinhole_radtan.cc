@@ -21,8 +21,10 @@ void SDF::sensors::CameraPinholeRadTan::show() const
 SDF::Bytes SDF::sensors::CameraPinholeRadTan::toBytes()
 {
   Bytes bytes = Bytes();
+  bytes.add((uint32_t)name.size());
   bytes.add(name);
   bytes.add(transform);
+  bytes.add((uint32_t)notes.size());
   bytes.add(notes);
 
   bytes.add(rate);
@@ -41,4 +43,10 @@ SDF::Bytes SDF::sensors::CameraPinholeRadTan::toBytes()
   bytes.add(imageChannels);
   bytes.add(dataType);
   return bytes;
+}
+
+static std::shared_ptr<SDF::sensors::CameraPinholeRadTan> SDF::sensors::CameraPinholeRadTan::fromBinaryFile(std::ifstream &inputFile)
+{
+  SDF::sensors::CameraPinholeRadTan camera = SDF::sensors::CameraPinholeRadTan();
+  return camera;
 }
