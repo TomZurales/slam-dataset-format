@@ -48,5 +48,10 @@ SDF::Bytes SDF::sensors::CameraPinholeRadTan::toBytes()
 static std::shared_ptr<SDF::sensors::CameraPinholeRadTan> SDF::sensors::CameraPinholeRadTan::fromBinaryFile(std::ifstream &inputFile)
 {
   SDF::sensors::CameraPinholeRadTan camera = SDF::sensors::CameraPinholeRadTan();
+  uint32_t name_size;
+  inputFile.read(reinterpret_cast<char *>(&name_size), sizeof(name_size));
+  camera.name.resize(name_size);
+  inputFile.read(reinterpret_cast<char *>(camera.name.data()), name_size);
+
   return camera;
 }
