@@ -45,7 +45,7 @@ SDF::Bytes SDF::sensors::CameraPinholeRadTan::toBytes()
   return bytes;
 }
 
-static SDF::sensors::CameraPinholeRadTan SDF::sensors::CameraPinholeRadTan::fromBinaryFile(std::ifstream &inputFile)
+SDF::sensors::CameraPinholeRadTan SDF::sensors::CameraPinholeRadTan::fromBinaryFile(std::ifstream &inputFile)
 {
   SDF::sensors::CameraPinholeRadTan camera = SDF::sensors::CameraPinholeRadTan();
   uint32_t name_size;

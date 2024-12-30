@@ -18,7 +18,7 @@ namespace SDF
 {
   namespace sensors
   {
-    class CameraPinholeRadTan : public Sensor, public Serializable
+    class CameraPinholeRadTan : public Sensor
     {
     public:
       class Data : public Sensor::Data
@@ -119,6 +119,7 @@ namespace SDF
 
       Bytes toBytes() override;
 
-      static std::shared_ptr<CameraPinholeRadTan> fromBinaryFile(std::ifstream &inputFile);
+      static CameraPinholeRadTan fromBinaryFile(std::ifstream &inputFile);
     };
   }
+}
