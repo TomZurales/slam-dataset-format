@@ -15,8 +15,14 @@ int main(int argc, char **argv)
   std::filesystem::path sdf_path(argv[1]);
   sdf_path = std::filesystem::canonical(sdf_path);
 
-  SDF::Loader loader;
-  loader.load(sdf_path);
+  // SDF::Generator generator;
+  // generator.addSensor<CameraPinholeRadTan>("cam0", props);
+  // generator.addSensor<CameraPinholeRadTan>("cam1", props);
+  // generator.addSensor<IMU>("imu0", props);
+  //
+  // generator.addData("cam0", data);
+  // generator.addData("cam1", data);
+  // generator.addData("imu0", data);
 
   return 0;
 }
