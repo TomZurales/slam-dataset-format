@@ -22,6 +22,8 @@ add_subdirectory(modules/plugins/position_leica)
 
 add_subdirectory(modules/sdf)
 
+add_subdirectory(modules/loader)
+
 add_subdirectory(modules/util)
 
 # add_executable(slam_dataset_format_test main.cc)
