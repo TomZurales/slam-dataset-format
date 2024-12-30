@@ -29,6 +29,8 @@ namespace SDF
     std::priority_queue<std::shared_ptr<Sensor::Data>, std::vector<std::shared_ptr<Sensor::Data>>, CompareSensorData> _data;
 
   public:
+    SDF() = default;
+
     void addSensor(std::shared_ptr<Sensor> sensor);
 
     int write(std::filesystem::path path);

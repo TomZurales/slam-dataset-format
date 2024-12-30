@@ -1,6 +1,9 @@
 #include <iostream>
 #include <filesystem>
 
+#include "sdf/sdf.h"
+#include "loader.h"
+
 int main(int argc, char **argv)
 {
   if (argc != 2)
@@ -12,7 +15,8 @@ int main(int argc, char **argv)
   std::filesystem::path sdf_path(argv[1]);
   sdf_path = std::filesystem::canonical(sdf_path);
 
-  // SDF::SDF sdf = SDF::Loader::load(sdf_path);
+  SDF::Loader loader;
+  loader.load(sdf_path);
 
   return 0;
 }

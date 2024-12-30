@@ -8,6 +8,8 @@ namespace SDF
 {
   class Loader
   {
-    static SDF load(std::filesystem::path path);
+  public:
+    Loader() = default;
+    SDF load(std::filesystem::path path);
   };
 }
