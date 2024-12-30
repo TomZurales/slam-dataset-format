@@ -36,5 +36,12 @@ namespace SDF
       }
       return bytes;
     }
+
+    static Transform fromBinaryFile(std::ifstream &inputFile)
+    {
+      Transform transform = Transform();
+
+      return transform;
+    }
   };
 }
