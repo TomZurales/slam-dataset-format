@@ -8,13 +8,13 @@
 #include <string>
 #include <queue>
 
-#include "sdf/header.h"
+#include "sdf/generator/header.h"
 #include "sdf/sensor.h"
 #include "sdf/sensor/data.h"
 
 namespace SDF
 {
-  class SDF
+  class Generator
   {
     Header _header;
     std::vector<std::shared_ptr<Sensor>> _sensors;
@@ -30,7 +30,7 @@ namespace SDF
     std::priority_queue<std::shared_ptr<Sensor::Data>, std::vector<std::shared_ptr<Sensor::Data>>, CompareSensorData> _data;
 
   public:
-    SDF() = default;
+    Generator() = default;
 
     void addSensor(std::shared_ptr<Sensor> sensor);
 

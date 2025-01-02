@@ -1,7 +1,7 @@
 #include <iostream>
 #include <filesystem>
 
-#include "sdf/sdf.h"
+#include "sdf/generator.h"
 // #include "loader.h"
 
 int main(int argc, char **argv)

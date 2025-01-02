@@ -1,12 +1,12 @@
-#include "sdf/sdf.h"
+#include "sdf/generator.h"
 
-void SDF::SDF::addSensor(std::shared_ptr<Sensor> sensor)
+void SDF::Generator::addSensor(std::shared_ptr<Sensor> sensor)
 {
   sensor->setId(_sensors.size());
   _sensors.push_back(sensor);
 }
 
-int SDF::SDF::write(std::filesystem::path path)
+int SDF::Generator::write(std::filesystem::path path)
 {
   std::ofstream outfile = std::ofstream(path, std::ios::binary);
   if (!outfile.is_open())
@@ -37,7 +37,7 @@ int SDF::SDF::write(std::filesystem::path path)
   return 3;
 }
 
-void SDF::SDF::show() const
+void SDF::Generator::show() const
 {
   std::cout << "Sensors:" << std::endl;
   for (auto sensor : _sensors)

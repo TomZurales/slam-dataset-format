@@ -20,7 +20,7 @@ add_subdirectory(modules/plugins/camera_pinhole_radtan)
 # add_subdirectory(modules/plugins/imu_6dof_allan)
 # add_subdirectory(modules/plugins/position_leica)
 
-add_subdirectory(modules/sdf)
+add_subdirectory(modules/generator)
 
 add_subdirectory(modules/util)
 
