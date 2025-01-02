@@ -10,6 +10,7 @@
 
 #include "sdf/header.h"
 #include "sdf/sensor.h"
+#include "sdf/sensor/data.h"
 
 namespace SDF
 {

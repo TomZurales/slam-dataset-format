@@ -3,39 +3,28 @@
 #include <string>
 #include <cstdint>
 
-#include "sdf/bytes.h"
-#include "sdf/transform.h"
 #include "sdf/serializable.h"
 
 namespace SDF
 {
-  class Sensor : public Serializable
+  template <typename T>
+  class Sensor : public Serializable<T>
   {
+    // Forward declare our data and properties classes
   public:
-    class Data : public Serializable
-    {
-    public:
-      virtual ~Data() = default;
+    class Data;
+    class Props;
 
-      uint64_t timestamp;
+  protected:
+    std::shared_ptr<Props> props;
+    std::vector<std::shared_ptr<Data>> data;
 
-      virtual void show() const = 0;
-
-      virtual bool load() { return false; }
-    };
-
-    std::string name;
-    Transform transform;
     uint32_t id;
 
-    Sensor() = default;
-    virtual ~Sensor() = default;
-
-    virtual void show() const = 0;
-
-    std::vector<std::shared_ptr<Data>> data;
-    bool lazyLoad = false;
-
-    virtual std::vector<std::shared_ptr<Data>> getData() const = 0;
+  public:
+    std::shared_ptr<Props> getProps() { return props; }
+    std::vector<std::shared_ptr<Data>> getData() { return data; }
+    uint32_t getId() { return id; }
+    void setId(uint32_t id) { this->id = id; }
   };
 }

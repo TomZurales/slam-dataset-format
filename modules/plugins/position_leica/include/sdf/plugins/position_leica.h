@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "sdf/sensor.h"
+#include "sdf/sensor/data.h"
 #include "sdf/bytes.h"
 #include "sdf/transform.h"
 
@@ -24,10 +25,6 @@ namespace SDF
         float pos_x;
         float pos_y;
         float pos_z;
-
-        void show() const override
-        {
-        }
 
         bool load() override
         {
@@ -46,10 +43,6 @@ namespace SDF
       };
 
       std::string notes;
-
-      std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
-
-      void show() const override;
 
       Bytes toBytes() override;
     };

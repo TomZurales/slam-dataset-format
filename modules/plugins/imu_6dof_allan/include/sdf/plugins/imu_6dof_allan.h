@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "sdf/sensor.h"
+#include "sdf/sensor/data.h"
 #include "sdf/bytes.h"
 #include "sdf/transform.h"
 
@@ -27,10 +28,6 @@ namespace SDF
         float wx;
         float wy;
         float wz;
-
-        void show() const override
-        {
-        }
 
         bool load() override
         {
@@ -58,10 +55,6 @@ namespace SDF
       float gyroscope_random_walk;
       float accelerometer_noise_density;
       float accelerometer_random_walk;
-
-      std::vector<std::shared_ptr<Sensor::Data>> getData() const override;
-
-      void show() const override;
 
       Bytes toBytes() override;
     };

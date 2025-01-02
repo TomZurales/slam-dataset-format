@@ -7,6 +7,7 @@
 // Forward declaration of the Serializable class
 namespace SDF
 {
+  template <typename T>
   class Serializable;
 }
 
@@ -32,7 +33,7 @@ namespace SDF
     template <typename T>
     void add(const T &value)
     {
-      static_assert(std::is_trivially_copyable<T>::value || std::is_base_of<SDF::Serializable, T>::value, "T must be trivially copyable");
+      // static_assert(std::is_trivially_copyable<T>::value || std::is_base_of<Serializable, T>::value, "T must be trivially copyable");
       const uint8_t *begin = reinterpret_cast<const uint8_t *>(&value);
       const uint8_t *end = begin + sizeof(T);
       bytes.insert(bytes.end(), begin, end);

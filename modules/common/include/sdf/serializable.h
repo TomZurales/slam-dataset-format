@@ -4,11 +4,13 @@
 
 namespace SDF
 {
+  template <typename T>
   class Serializable
   {
   public:
     virtual ~Serializable() = default;
     virtual Bytes toBytes() = 0;
-    static Serializable fromBinaryFile(std::ifstream &inputFile);
+
+    T fromBytes(Bytes bytes);
   };
 }
