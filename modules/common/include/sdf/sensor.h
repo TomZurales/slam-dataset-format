@@ -7,8 +7,12 @@
 
 namespace SDF
 {
+  class SensorBase
+  {
+  };
+
   template <typename T>
-  class Sensor : public Serializable<T>
+  class Sensor : public SensorBase, public Serializable<T>
   {
     // Forward declare our data and properties classes
   public:

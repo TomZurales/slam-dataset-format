@@ -4,13 +4,12 @@
 
 namespace SDF
 {
-  template <typename T>
-  class Sensor<T>::Data : public Serializable<T>
+  class SensorData : public Serializable<SensorData>
   {
   public:
     uint64_t timestamp;
 
-    virtual ~Data() = default;
+    virtual ~SensorData() = default;
     virtual bool lazyLoad() { return true; }
   };
 }

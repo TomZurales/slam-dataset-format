@@ -17,22 +17,22 @@ namespace SDF
   class SDF
   {
     Header _header;
-    std::vector<std::shared_ptr<Sensor>> _sensors;
+    std::vector<std::shared_ptr<SensorBase>> _sensors;
 
     struct CompareSensorData
     {
-      bool operator()(const std::shared_ptr<Sensor::Data> &lhs, const std::shared_ptr<Sensor::Data> &rhs) const
+      bool operator()(const std::shared_ptr<SensorData> &lhs, const std::shared_ptr<SensorData> &rhs) const
       {
         return lhs->timestamp > rhs->timestamp;
       }
     };
 
-    std::priority_queue<std::shared_ptr<Sensor::Data>, std::vector<std::shared_ptr<Sensor::Data>>, CompareSensorData> _data;
+    std::priority_queue<std::shared_ptr<SensorData>, std::vector<std::shared_ptr<SensorData>>, CompareSensorData> _data;
 
   public:
     SDF() = default;
 
-    void addSensor(std::shared_ptr<Sensor> sensor);
+    void addSensor(std::shared_ptr<SensorBase> sensor);
 
     int write(std::filesystem::path path);
 

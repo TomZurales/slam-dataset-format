@@ -4,12 +4,12 @@
 
 namespace SDF
 {
-  class Sensor::Props : public Serializable
+  class SensorProps : public Serializable<SensorProps>
   {
   public:
     std::string name;
     Transform transform = Transform();
 
-    virtual ~Props() = default;
+    virtual ~SensorProps() = default;
   };
 }
