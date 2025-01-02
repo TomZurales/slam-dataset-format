@@ -1,6 +1,6 @@
 #include "sdf/sdf.h"
 
-void SDF::SDF::addSensor(std::shared_ptr<SensorBase> sensor)
+void SDF::SDF::addSensor(std::shared_ptr<Sensor> sensor)
 {
   sensor->setId(_sensors.size());
   _sensors.push_back(sensor);

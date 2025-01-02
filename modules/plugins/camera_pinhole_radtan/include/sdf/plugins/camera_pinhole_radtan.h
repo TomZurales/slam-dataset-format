@@ -18,7 +18,7 @@ namespace SDF
 {
   namespace sensors
   {
-    class CameraPinholeRadTan : public Sensor<CameraPinholeRadTan>
+    class CameraPinholeRadTan : public Sensor
     {
     public:
       Bytes toBytes() override;

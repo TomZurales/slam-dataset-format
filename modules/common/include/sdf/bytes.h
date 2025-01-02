@@ -4,13 +4,6 @@
 #include <cstring>
 #include <memory>
 
-// Forward declaration of the Serializable class
-namespace SDF
-{
-  template <typename T>
-  class Serializable;
-}
-
 namespace SDF
 {
   class Bytes

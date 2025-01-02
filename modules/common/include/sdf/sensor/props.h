@@ -4,7 +4,7 @@
 
 namespace SDF
 {
-  class SensorProps : public Serializable<SensorProps>
+  class Sensor::Props : public Serializable
   {
   public:
     std::string name;
