@@ -18,8 +18,8 @@ namespace SDF
     uint32_t getId() { return id; }
     void setId(uint32_t id) { this->id = id; }
 
-    virtual std::shared_ptr<SensorProps> getProps() = 0;
-    virtual std::vector<std::shared_ptr<SensorData>> getData() = 0;
+    virtual std::shared_ptr<SensorProps> _getProps() = 0;
+    virtual std::vector<std::shared_ptr<SensorData>> _getData() = 0;
   };
 
   template <typename T_Data, typename T_Props>
@@ -30,15 +30,18 @@ namespace SDF
     std::vector<std::shared_ptr<T_Data>> data;
 
   public:
-    std::shared_ptr<SensorProps> getProps() override { return props; }
-    std::vector<std::shared_ptr<SensorData>> getData() override
+    std::shared_ptr<SensorProps> _getProps() override { return props; }
+    std::vector<std::shared_ptr<SensorData>> _getData() override
     {
       std::vector<std::shared_ptr<SensorData>> sensorData;
-      for (const auto &d : data)
+      for (auto d : data)
       {
-        sensorData.push_back(std::static_pointer_cast<SensorData>(d));
+        sensorData.push_back(d);
       }
       return sensorData;
     }
+
+    std::shared_ptr<T_Props> getProps() { return props; }
+    std::vector<std::shared_ptr<T_Data>> getData() { return data; }
   };
 }

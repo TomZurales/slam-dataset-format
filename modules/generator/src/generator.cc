@@ -20,7 +20,7 @@ int SDF::Generator::write(std::filesystem::path path)
   }
   for (auto sensor : _sensors)
   {
-    for (auto data : sensor->getData())
+    for (auto data : sensor->_getData())
     {
       _data.push(data);
     }
