@@ -1,6 +1,6 @@
 #include "sdf/generator.h"
 
-void SDF::Generator::addSensor(std::shared_ptr<Sensor> sensor)
+void SDF::Generator::addSensor(std::shared_ptr<SensorBase> sensor)
 {
   sensor->setId(_sensors.size());
   _sensors.push_back(sensor);
@@ -16,7 +16,7 @@ int SDF::Generator::write(std::filesystem::path path)
 
   for (auto sensor : _sensors)
   {
-    outfile << sensor->toBytes();
+    // outfile << sensor->toBytes();
   }
   for (auto sensor : _sensors)
   {

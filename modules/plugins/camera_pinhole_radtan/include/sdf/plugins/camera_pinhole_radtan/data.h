@@ -4,10 +4,16 @@
 
 #include "sdf/plugins/camera_pinhole_radtan.h"
 
-class SDF::sensors::CameraPinholeRadTan::Data : public Sensor::Data
+namespace SDF
 {
-  cv::Mat image;
-  std::filesystem::path imagePath;
+  namespace sensors
+  {
+    class CameraPinholeRadTanData : public SensorData
+    {
+      cv::Mat image;
+      std::filesystem::path imagePath;
 
-public:
-};
+    public:
+    };
+  }
+}
