@@ -11,6 +11,6 @@ namespace SDF
     virtual Bytes toBytes() = 0;
 
     template <typename T>
-    T fromBytes(Bytes bytes);
+    static T fromBytes(Bytes bytes);
   };
 }

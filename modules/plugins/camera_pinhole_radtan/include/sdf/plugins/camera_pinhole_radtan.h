@@ -23,8 +23,8 @@ namespace SDF
     class CameraPinholeRadTan : public Sensor<CameraPinholeRadTanData, CameraPinholeRadTanProps>
     {
     public:
-      Bytes toBytes() override;
-      CameraPinholeRadTan fromBytes(Bytes bytes);
+      CameraPinholeRadTan() = default;
+      ~CameraPinholeRadTan() = default;
     };
   }
 }

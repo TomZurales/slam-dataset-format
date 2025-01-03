@@ -32,7 +32,7 @@ int SDF::Generator::write(std::filesystem::path path)
       std::cout << "Writing " << count - _data.size() << " of " << count << " sensor data" << std::endl;
     auto data = _data.top();
     _data.pop();
-    outfile << data->toBytes();
+    // outfile << data->toBytes();
   }
   return 3;
 }

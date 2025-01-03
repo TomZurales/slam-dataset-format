@@ -23,11 +23,11 @@ namespace SDF
   };
 
   template <typename T_Data, typename T_Props>
-  class Sensor : public Serializable, public SensorBase
+  class Sensor : public SensorBase
   {
   protected:
-    std::shared_ptr<T_Props> props;
-    std::vector<std::shared_ptr<T_Data>> data;
+    std::shared_ptr<T_Props> props = std::make_shared<T_Props>();
+    std::vector<std::shared_ptr<T_Data>> data = std::vector<std::shared_ptr<T_Data>>();
 
   public:
     std::shared_ptr<SensorProps> _getProps() override { return props; }
@@ -43,5 +43,6 @@ namespace SDF
 
     std::shared_ptr<T_Props> getProps() { return props; }
     std::vector<std::shared_ptr<T_Data>> getData() { return data; }
+    void addData(std::shared_ptr<T_Data> data) { this->data.push_back(data); }
   };
 }

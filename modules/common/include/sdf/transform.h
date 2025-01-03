@@ -32,7 +32,7 @@ namespace SDF
       Bytes bytes = Bytes();
       for (auto value : data)
       {
-        bytes.add(value);
+        // bytes.add(value);
       }
       return bytes;
     }
