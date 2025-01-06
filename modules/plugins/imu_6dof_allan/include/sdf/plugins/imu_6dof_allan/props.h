@@ -9,6 +9,7 @@ namespace SDF
   {
     class Imu6dofAllanProps : public SensorProps
     {
+    public:
       std::string notes;
       float rate;
 
@@ -18,6 +19,17 @@ namespace SDF
       float accelerometer_random_walk;
 
       Bytes toBytes() override;
+      static Imu6dofAllanProps fromBytes(Bytes bytes);
+
+      bool operator==(const Imu6dofAllanProps &other) const
+      {
+        return notes == other.notes &&
+               rate == other.rate &&
+               gyroscope_noise_density == other.gyroscope_noise_density &&
+               gyroscope_random_walk == other.gyroscope_random_walk &&
+               accelerometer_noise_density == other.accelerometer_noise_density &&
+               accelerometer_random_walk == other.accelerometer_random_walk;
+      }
     };
   }
 }

@@ -1,5 +1,3 @@
-find_package(OpenCV 4.10 REQUIRED)
-
 set(SOURCES
   src/imu_6dof_allan.cc
 )
@@ -11,7 +9,7 @@ target_include_directories(imu_6dof_allan
 )
 
 target_link_libraries(imu_6dof_allan
-  PRIVATE common
+  PUBLIC common
 )
 
 if(DO_TEST)

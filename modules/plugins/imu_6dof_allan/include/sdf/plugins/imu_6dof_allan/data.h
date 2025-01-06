@@ -17,17 +17,18 @@ namespace SDF
       float wy;
       float wz;
 
-      Bytes toBytes() override
+      Bytes toBytes() override;
+      static Imu6dofAllanData fromBytes(Bytes bytes);
+
+      bool operator==(const Imu6dofAllanData &other) const
       {
-        Bytes bytes = Bytes();
-        bytes.add(timestamp);
-        bytes.add(ax);
-        bytes.add(ay);
-        bytes.add(az);
-        bytes.add(wx);
-        bytes.add(wy);
-        bytes.add(wz);
-        return bytes;
+        return timestamp == other.timestamp &&
+               ax == other.ax &&
+               ay == other.ay &&
+               az == other.az &&
+               wx == other.wx &&
+               wy == other.wy &&
+               wz == other.wz;
       }
     };
   };
