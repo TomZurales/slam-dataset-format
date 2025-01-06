@@ -1,2 +1,2 @@
-# add_subdirectory(EuRoC_to_SDF)
+add_subdirectory(EuRoC_to_SDF)
 add_subdirectory(sdf_info)
