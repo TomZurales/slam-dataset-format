@@ -22,8 +22,7 @@ namespace SDF
         return timestamp == other.timestamp &&
                image.channels() == other.image.channels() &&
                image.rows == other.image.rows &&
-               image.cols == other.image.cols &&
-               std::equal(image.begin<uchar>(), image.end<uchar>(), other.image.begin<uchar>());
+               image.cols == other.image.cols;
       }
 
       bool operator!=(const CameraPinholeRadTanData &other) const

@@ -74,6 +74,16 @@ namespace SDF
       return data;
     }
 
+    std::vector<uint8_t> get_raw_vec()
+    {
+      std::vector<uint8_t> data;
+      size_t size = *reinterpret_cast<const size_t *>(bytes.data() + position);
+      data.resize(size);
+      std::memcpy(data.data(), bytes.data() + position + sizeof(size_t), size);
+      position = position + sizeof(size_t) + size;
+      return data;
+    }
+
     void resetPosition()
     {
       position = 0;

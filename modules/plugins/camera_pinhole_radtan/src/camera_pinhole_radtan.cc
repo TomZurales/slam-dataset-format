@@ -48,10 +48,9 @@ SDF::Bytes SDF::sensors::CameraPinholeRadTanData::toBytes()
 {
   Bytes bytes = Bytes();
   bytes.add(timestamp);
-  bytes.add(image.cols);
-  bytes.add(image.rows);
-  bytes.add(image.channels());
-  bytes.add_raw(image.data, image.total() * image.elemSize());
+  std::vector<uchar> buffer;
+  cv::imencode(".webp", image, buffer, {cv::IMWRITE_WEBP_QUALITY, 100});
+  bytes.add_raw(buffer.data(), buffer.size());
   return bytes;
 }
 
@@ -60,10 +59,6 @@ SDF::sensors::CameraPinholeRadTanData SDF::sensors::CameraPinholeRadTanData::fro
   bytes.resetPosition();
   CameraPinholeRadTanData data = CameraPinholeRadTanData();
   data.timestamp = bytes.get<uint64_t>();
-  int width = bytes.get<int>();
-  int height = bytes.get<int>();
-  int channels = bytes.get<int>();
-  data.image = cv::Mat(height, width, CV_MAKETYPE(CV_8U, channels));
-  std::memcpy(data.image.data, bytes.get_raw(), data.image.total() * data.image.elemSize());
+  data.image = cv::imdecode(bytes.get_raw_vec(), cv::IMREAD_ANYCOLOR);
   return data;
 }
