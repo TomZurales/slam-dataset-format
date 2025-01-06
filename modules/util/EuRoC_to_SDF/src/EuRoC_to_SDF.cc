@@ -51,7 +51,7 @@ void processCamera(std::filesystem::path cameraPath, YAML::Node cameraConfig, st
 
 void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared_ptr<SDF::SDF> sdf)
 {
-  std::shared_ptr<SDF::sensors::IMU6DOFAllan> imu(new SDF::sensors::IMU6DOFAllan());
+  std::shared_ptr<SDF::sensors::Imu6dofAllan> imu(new SDF::sensors::Imu6dofAllan());
   imu->name = imuPath.filename().string();
   imu->transform = SDF::Transform(imuConfig["T_BS"]["data"].as<std::vector<float>>());
 
@@ -78,7 +78,7 @@ void processIMU(std::filesystem::path imuPath, YAML::Node imuConfig, std::shared
     {
       continue;
     }
-    std::shared_ptr<SDF::sensors::IMU6DOFAllan::Data> imuData = std::make_shared<SDF::sensors::IMU6DOFAllan::Data>();
+    std::shared_ptr<SDF::sensors::Imu6dofAllan::Data> imuData = std::make_shared<SDF::sensors::Imu6dofAllan::Data>();
     std::istringstream ss(line);
     std::string token;
     std::getline(ss, token, ',');
