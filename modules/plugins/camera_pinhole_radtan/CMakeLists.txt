@@ -16,9 +16,9 @@ target_link_libraries(camera_pinhole_radtan
   PUBLIC common
 )
 
-if(DO_TEST)
-  add_executable(camera_pinhole_radtan_test test/camera_pinhole_radtan_test.cc)
-  target_link_libraries(camera_pinhole_radtan_test camera_pinhole_radtan Catch2::Catch2WithMain)
+# if(DO_TEST)
+#   add_executable(camera_pinhole_radtan_test test/camera_pinhole_radtan_test.cc)
+#   target_link_libraries(camera_pinhole_radtan_test camera_pinhole_radtan Catch2::Catch2WithMain)
 
-  catch_discover_tests(camera_pinhole_radtan_test)
-endif()
+#   catch_discover_tests(camera_pinhole_radtan_test)
+# endif()

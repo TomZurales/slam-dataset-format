@@ -111,5 +111,13 @@ namespace SDF
       file.read(reinterpret_cast<char *>(bytes.bytes.data()), size);
       return bytes;
     }
+
+    static Bytes fromStream(std::istream &stream, int size)
+    {
+      Bytes bytes;
+      bytes.bytes.resize(size);
+      stream.read(reinterpret_cast<char *>(bytes.bytes.data()), size);
+      return bytes;
+    }
   };
 }
