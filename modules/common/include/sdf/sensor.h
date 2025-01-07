@@ -44,5 +44,5 @@ namespace SDF
     std::shared_ptr<T_Props> getProps() { return props; }
     std::vector<std::shared_ptr<T_Data>> getData() { return data; }
     void addData(std::shared_ptr<T_Data> data) { this->data.push_back(data); }
-    };
+  };
 }

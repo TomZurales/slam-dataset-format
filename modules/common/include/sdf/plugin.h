@@ -11,5 +11,6 @@ namespace SDF
 
   public:
     Plugin(std::string name) : name(name) {};
+    std::string getName() { return name; }
   };
 }

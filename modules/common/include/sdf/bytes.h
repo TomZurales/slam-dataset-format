@@ -4,6 +4,8 @@
 #include <cstring>
 #include <memory>
 #include <fstream>
+#include <vector>
+#include <filesystem>
 
 namespace SDF
 {
@@ -38,7 +40,7 @@ namespace SDF
     }
 
     template <typename T>
-    T get(size_t offset) const
+    T get(size_t offset)
     {
       static_assert(std::is_trivially_copyable<T>::value, "Type must be trivially copyable");
       T value;
@@ -92,6 +94,7 @@ namespace SDF
 
     friend std::ostream &operator<<(std::ostream &os, const Bytes &bytes)
     {
+      os.write(reinterpret_cast<const char *>(bytes.bytes.size()), sizeof(bytes.bytes.size()));
       os.write(reinterpret_cast<const char *>(bytes.bytes.data()), bytes.bytes.size());
       return os;
     }
@@ -112,9 +115,11 @@ namespace SDF
       return bytes;
     }
 
-    static Bytes fromStream(std::istream &stream, int size)
+    static Bytes fromStream(std::istream &stream)
     {
       Bytes bytes;
+      size_t size;
+      stream.read(reinterpret_cast<char *>(&size), sizeof(size));
       bytes.bytes.resize(size);
       stream.read(reinterpret_cast<char *>(bytes.bytes.data()), size);
       return bytes;
