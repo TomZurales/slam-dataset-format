@@ -29,6 +29,14 @@ void SDF::Dataset::readSensors(std::ifstream &file)
 {
   uint32_t numSensors;
   file.read((char *)&numSensors, sizeof(numSensors));
+  for (int i = 0; i < numSensors; i++)
+  {
+    uint32_t pluginId;
+    file.read((char *)&pluginId, sizeof(pluginId));
+    uint32_t serializerId;
+    file.read((char *)&serializerId, sizeof(serializerId));
+    plugins[pluginId].getSerializers()[serializerId]->deserialize(file);
+  }
 }
 
 void SDF::Dataset::readMetadata(std::ifstream &file)
