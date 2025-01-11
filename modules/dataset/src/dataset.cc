@@ -1,69 +1,74 @@
 #include "sdf/dataset.h"
 
-bool verifyChecksum(std::ifstream &file)
+bool SDF::Dataset::verifyChecksum()
 {
   uint32_t checksum;
-  file.read((char *)&checksum, sizeof(checksum));
+  read(&checksum);
   return checksum == 0x51A3DA7A;
 }
 
-void SDF::Dataset::readPlugins(std::ifstream &file)
+void SDF::Dataset::readPlugins()
 {
   uint32_t numPlugins;
-  file.read((char *)&numPlugins, sizeof(numPlugins));
+  read(&numPlugins);
 
   for (int i = 0; i < numPlugins; i++)
   {
     uint32_t pluginNameLength;
-    file.read((char *)&pluginNameLength, sizeof(pluginNameLength));
+    read(&pluginNameLength);
 
     std::string pluginName;
     pluginName.resize(pluginNameLength);
-    file.read(pluginName.data(), pluginNameLength);
+    read_raw(pluginName.data(), pluginNameLength);
 
     plugins.push_back(SDF::Plugin(pluginName));
   }
 }
 
-void SDF::Dataset::readSensors(std::ifstream &file)
+void SDF::Dataset::readSensors()
 {
   uint32_t numSensors;
-  file.read((char *)&numSensors, sizeof(numSensors));
+  read(&numSensors);
   for (int i = 0; i < numSensors; i++)
   {
     uint32_t pluginId;
-    file.read((char *)&pluginId, sizeof(pluginId));
+    read(&pluginId);
     uint32_t serializerId;
-    file.read((char *)&serializerId, sizeof(serializerId));
+    read(&serializerId);
     plugins[pluginId].getSerializers()[serializerId]->deserialize(file);
   }
 }
 
-void SDF::Dataset::readMetadata(std::ifstream &file)
+void SDF::Dataset::readMetadata()
 {
-  readPlugins(file);
-  readSensors(file);
+  readPlugins();
+  readSensors();
 }
 
 SDF::Dataset SDF::Dataset::Load(const std::filesystem::path &path)
 {
   SDF::Dataset dataset;
 
-  std::ifstream datasetFile(path, std::ios::binary);
-  if (!datasetFile.is_open())
+  dataset.file = std::ifstream(path, std::ios::binary);
+  if (!dataset.file.is_open())
   {
-    dataset.status = 2;
+    dataset.status = Status::ERROR;
     dataset.message = "Failed to open file " + path.string();
     return dataset;
   }
 
-  if (!verifyChecksum(datasetFile))
+  dataset.file.seekg(0, std::ios::end);
+  dataset.fileSize = dataset.file.tellg();
+  dataset.file.seekg(0, std::ios::beg);
+
+  if (!dataset.verifyChecksum())
   {
-    dataset.status = 1;
-    dataset.message = "Checksum failed";
+    dataset.status = Status::ERROR;
+    dataset.message = "Checksum read failed";
+    return dataset;
   }
 
-  dataset.readMetadata(datasetFile);
+  dataset.readMetadata();
 
   return dataset;
 }

@@ -11,18 +11,46 @@ namespace SDF
 {
   class Dataset
   {
-  private:
-    void readMetadata(std::ifstream &file);
-    void readPlugins(std::ifstream &file);
-    void readSensors(std::ifstream &file);
+    enum Status
+    {
+      OK = 0,
+      ERROR
+    };
 
-    int status = 0;
+  private:
+    void readMetadata();
+    void readPlugins();
+    void readSensors();
+
+    bool verifyChecksum();
+
+    Status status = Status::OK;
     std::string message = "";
 
     std::vector<SDF::Plugin> plugins;
     std::vector<SDF::SensorBase> sensors;
 
     std::vector<std::string> scanList;
+
+    std::ifstream file;
+    size_t fileSize = 0;
+
+    template <typename T>
+    void read(T *value)
+    {
+      if (file.tellg() + sizeof(T) >= fileSize)
+      {
+        status = Status::ERROR;
+        message = "Unexpected end of file";
+        return;
+      }
+      file.read(reinterpret_cast<char *>(&value), sizeof(T));
+    }
+
+    void read_raw(void *buf, size_t size)
+    {
+      file.read(reinterpret_cast<char *>(buf), size);
+    }
 
   public:
     static Dataset Load(const std::filesystem::path &);

@@ -8,6 +8,7 @@ TEST_CASE("Datasets can be loaded from SDF files", "[dataset]")
   std::ofstream datasetFile("/tmp/dataset_test.sdf", std::ios::binary);
   uint32_t header = 0x51A3DA7A;
   datasetFile.write(reinterpret_cast<const char *>(&header), 4);
+  uint32_t numPlugins = 0;
   datasetFile.close();
 
   SDF::Dataset dataset = SDF::Dataset::Load("/tmp/dataset_test.sdf");
