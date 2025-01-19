@@ -16,7 +16,7 @@ int SDF::Generator::write(std::filesystem::path path)
 
   for (auto sensor : _sensors)
   {
-    // outfile << sensor->toBytes();
+    outfile << sensor->toBytes();
   }
   for (auto sensor : _sensors)
   {
